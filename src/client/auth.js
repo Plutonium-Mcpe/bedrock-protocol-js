@@ -100,11 +100,13 @@ async function authenticate (client, options) {
  */
 function createOfflineSession (client, options) {
   if (!options.username) throw Error('Must specify a valid username')
+  
   const profile = {
     name: options.username,
-    uuid: uuidFrom(options.username), // random
-    xuid: 0
+    uuid: options.uuid || uuidFrom(options.username), // fake id in other files
+    xuid: options.xuid || 0
   }
+  
   return postAuthenticate(client, profile, { chain: [], token: '' }) // No extra JWTs, only send our own login data
 }
 
